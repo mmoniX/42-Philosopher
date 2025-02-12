@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:42:38 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/11 18:48:31 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/12 11:51:00 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,14 @@ int	ft_atoi(const char *str)
 		return ((int)(sign * num));
 	printf("Error: out of range\n");
 	exit(1);
+}
+
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }
