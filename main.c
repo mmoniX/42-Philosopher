@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:07:23 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/15 15:35:30 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/18 14:38:56 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,21 @@ int input_check(int argc, char *argv[])
 				return (printf("ERROR: invalid input\n"), -1);
 			j++;
 		}
-		if (ft_atoi(argv[i]) <= 0 || ft_strlen(argv[i]) >= 11)  //not sure if all variables will be > 0 (var 6)
+		if (i == 6 && (ft_atoi(argv[i]) < 0 || ft_strlen(argv[i]) >= 11))
+			return (printf("ERROR: check arguments\n"), -1);
+		else if (i != 6 && ft_atoi(argv[i]) <= 0 || ft_strlen(argv[i]) >= 11)
 			return (printf("ERROR: not positive input\n"), -1);
 		i++;
 	}
 	return (1);
 }
 
-t_table initialization 
-
-	
 int	main(int argc, char *argv[])
 {
-	pthread_t	thread;
+	t_data	data;
+
 	if (input_check(argc, argv) != 1)
 		return (0);
-	pthread_create(&thread, NULL, &val, NULL);
-	pthread_join(thread, NULL);
+	initialize_data(&data, argc, argv);
 	return (0);
 }
