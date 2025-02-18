@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/18 14:28:31 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:14:30 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,30 @@ int	initialize_data(t_data *data, int argc, char *argv[])
 	else
 		data->var5_eatnum = -1;
 	data->start_time = get_time();
-	data->last_eat = get_time();
-	data->total_eat = 0;
+	data->death = 0;
+	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->var1_philonum);
+	if (!data->forks)
+		return (printf("ERROR: malloc failed\n"), -1);
+	pthread_mutex_init(&data->status_lock, NULL);
+	pthread_mutex_init(&data->death_lock, NULL);
 	return (0);
+}
+
+void	initialize_philosophers(t_data *data, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->var1_philonum)
+	{
+		philo[i].id = i + 1;
+		philo[i].total_eat = 0;
+		philo[i].last_eat = data->start_time;
+		philo[i].data = data;
+		pthread_mutex_init(&data->forks[i], NULL);
+		philo[i].left_fork = &data->forks[i];
+		philo[i].right_fork = &data->forks[(i + 1) % data->var1_philonum];
+		i++;
+	}
 }
 
