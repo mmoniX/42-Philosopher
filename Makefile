@@ -1,8 +1,8 @@
 CC = cc -g -pthread
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 VAL = valgrind --leak-check=full --track-origin=yes --tool=helgrind
 
-SRC = main.c utils.c
+SRC = main.c utils.c init.c
 
 OBJ = $(SRC:.c=.o)
 

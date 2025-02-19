@@ -6,13 +6,13 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/19 15:07:03 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/19 15:33:56 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_data	*initialize_data(t_data *data, int argc, char *argv[])
+t_data	*initialize_data(int argc, char *argv[])
 {
 	t_data	*data;
 
@@ -30,9 +30,9 @@ t_data	*initialize_data(t_data *data, int argc, char *argv[])
 	data->start_time = get_time();
 	data->death = 0;
 	data->id = 0;
-	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->var1_philonum);
-	if (!data->forks)
-		return (printf("ERROR: malloc failed\n"), -1);
+	// data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->var1_philonum);
+	// if (!data->forks)
+	// 	return (printf("ERROR: malloc failed\n"), -1);
 	pthread_mutex_init(&data->print_status, NULL);
 	pthread_mutex_init(&data->death_lock, NULL);
 	return (data);

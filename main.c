@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:07:23 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/19 15:01:47 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/19 15:32:06 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char *argv[])
 
 	if (input_check(argc, argv) != 1)
 		return (0);
-	data = initialize_data(data, argc, argv);;
+	data = initialize_data(argc, argv);
 	if (!data)
 		return (printf("ERROR: parsing failed\n"), -1);
 	
