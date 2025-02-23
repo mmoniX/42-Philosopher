@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/20 17:23:11 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/23 18:22:18 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,22 @@ void	initialize_data(t_data *data, int argc, char *argv[])
 		data->philosophers[i].data = data;
 	}
 }
+/* rules will be the function executed over and over by the philosophers */
+void	*rules(void *arg)
+{
+	t_philo *philo;
 
-
+	philo = (t_philo *)arg;
+	// philo->last_eat = get_time();
+	pthread_create(&philo->status_check, NULL, check_termination, philo->data);
+	pthread_detach(philo->status_check);
+	if (philo->philo_id % 2 == 0)
+		usleep(1000);
+	while (!philo->data->death && !check_var5_eatnum(philo->data))
+	{
+		philo_eat(philo);
+		philo_sleep(philo);
+		philo_think(philo);
+	}
+	return (NULL);
+}

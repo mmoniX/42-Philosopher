@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:08:44 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/23 13:17:41 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/23 18:20:56 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-#define RESET	"\033[0m"
-#define BOLDRED	"\033[1m\033[31m"
+#define RESET	"\e[0m"
+#define BOLDRED	"\e[1m\033[31m"		//dead
+#define WHITE	"\e[0;37m"			//fork
+#define YELLOW	"\e[0;33m"			//eat
+#define BLUE	"\e[0;34m"			//sleep
+#define CYAN	"\e[0;36m"			//think
 
 typedef struct s_philo
 {
@@ -55,9 +59,13 @@ time_t	get_time(void);
 
 /* init */
 void	initialize_data(t_data *data, int argc, char *argv[]);
+void	*rules(void *arg);
 
 /* action */
-int	check_var5_eatnum(t_data *data);
-int	check_termination(t_data *data);
+int		check_var5_eatnum(t_data *data);
+void	*check_termination(void *arg);
+void	philo_eat(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+void	philo_think(t_philo *philo);
 
 #endif
