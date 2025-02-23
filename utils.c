@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:42:38 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/20 17:35:51 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/22 12:29:42 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,4 @@ time_t	get_time(void)
 
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-void print_current_time(void)
-{
-    time_t rawtime;
-    struct tm * timeinfo;
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
-    printf("Current local time and date: %s", asctime(timeinfo));
 }

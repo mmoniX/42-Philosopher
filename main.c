@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:07:23 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/20 17:37:19 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/23 14:12:59 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,24 @@ int input_check(int argc, char *argv[])
 			return (printf("ERROR: not positive input\n"), -1);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_data	data;
 
-	if (input_check(argc, argv) != 0)
-		return (1);
+	if (input_check(argc, argv) != 1)
+		return (0);
 	initialize_data(&data, argc, argv);
+	for (int i = 0; i < data.var1_philonum; i++)
+        data.philosophers[i].last_eat = get_time() - (data.var2_die + 100); // Set last_eat to trigger death
 	int i = 0;
 	while (i < data.var1_philonum)
 	{
 		printf("%d\n", data.philosophers[i].philo_id);
 		i++;
 	}
-	printf("%lu\n", data.start_time);
-	print_current_time();
+	check_termination(&data);
 	return (0);
 }
