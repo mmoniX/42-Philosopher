@@ -1,6 +1,9 @@
 CC = cc -g -pthread
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-VAL = valgrind --leak-check=full --track-origin=yes --tool=helgrind
+CFLAGS = -Wall -Wextra -Werror -g  -fsanitize=thread
+
+# -fsanitize=address
+
+VAL = valgrind --leak-check=full --track-origin=yes --tool=helgrind --tool=drd
 
 SRC = main.c utils.c init.c action.c
 

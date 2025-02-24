@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:08:44 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/24 12:49:00 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/24 13:32:49 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define WHITE	"\e[0;37m"			//fork
 #define YELLOW	"\e[0;33m"			//eat
 #define BLUE	"\e[0;34m"			//sleep
-#define CYAN	"\e[0;36m"			//think
+#define GREEN	"\e[0;32m"			//think
 
 typedef struct s_philo
 {
@@ -34,6 +34,7 @@ typedef struct s_philo
 	pthread_t		status_check;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	eat_lock;
 	struct s_data	*data;
 }					t_philo;
 
@@ -46,6 +47,7 @@ typedef struct s_data
 	int				var5_eatnum;
 	time_t			start_time;
 	int				death;
+	pthread_mutex_t	death_lock;
 	pthread_t		*threads;
 	pthread_mutex_t	*forks;
 	t_philo			*philosophers;
@@ -61,8 +63,8 @@ time_t	get_time(void);
 int		input_check(int argc, char *argv[]);
 void	initialize_data(t_data *data, int argc, char *argv[]);
 void	*rules(void *arg);
-void	*simulation(t_data *data);
-void	destroy(t_data *data);
+void	simulation(t_data *data);
+void	free_all(t_data *data);
 
 /* action */
 int		check_var5_eatnum(t_data *data);
