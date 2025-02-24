@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/23 18:22:18 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/24 12:46:44 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,42 @@ void	*rules(void *arg)
 		philo_think(philo);
 	}
 	return (NULL);
+}
+
+/* simulation will be the function execute for the program, where each philosopher will be a thread */
+void	*simulation(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	// data->start_time = get_time();
+	while (i < data->var1_philonum)
+	{
+		pthread_create(&data->threads[i], NULL, rules, data->philosophers[i]);
+		i++;
+	}
+	i = 0;
+	while (i < data->var1_philonum)
+	{
+		pthread_join(&data->threads[i], NULL);
+		i++;
+	}
+}
+
+void	destroy(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->var1_philonum)
+	{
+		pthread_mutex_destroy(data->forks[i]);
+		i++;
+	}
+	if (data->threads)
+		free(data->threads);
+	if (data->forks)
+		free(data->forks);
+	if (data->philosophers)
+		free(data->philosophers);
 }

@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:08:44 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/23 18:20:56 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/24 12:47:13 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ time_t	get_time(void);
 /* init */
 void	initialize_data(t_data *data, int argc, char *argv[]);
 void	*rules(void *arg);
+void	*simulation(t_data *data);
+void	destroy(t_data *data);
 
 /* action */
 int		check_var5_eatnum(t_data *data);

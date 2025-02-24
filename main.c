@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:07:23 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/23 17:38:01 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/24 12:47:07 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,7 @@ int	main(int argc, char *argv[])
 	if (input_check(argc, argv) != 1)
 		return (0);
 	initialize_data(&data, argc, argv);
-	for (int i = 0; i < data.var1_philonum; i++)
-        data.philosophers[i].last_eat = get_time() - (data.var2_die + 1); // Set last_eat to trigger death
-	int i = 0;
-	while (i < data.var1_philonum)
-	{
-		printf("%d\n", data.philosophers[i].philo_id);
-		i++;
-	}
-	check_termination(&data);
+	simulation(data);
+	destroy(data);
 	return (0);
 }
