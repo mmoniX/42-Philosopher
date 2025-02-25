@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/24 16:10:11 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/25 18:35:36 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,29 @@ void	initialize_data(t_data *data, int argc, char *argv[])
 	data->var4_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->var5_eatnum = ft_atoi(argv[5]);
-	data->var5_eatnum = -1;
+	else
+		data->var5_eatnum = -1;
+	data->start_time = get_time();
 	data->death = 0;
 	data->threads = malloc(sizeof(pthread_t) * data->var1_philonum);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->var1_philonum);
 	data->philosophers = malloc(sizeof(t_philo) * data->var1_philonum);
+	if (!data->threads || !data->forks || !data->philosophers)
+	{
+		printf("Memory allocation failed\n");
+		return ;
+	}
+	pthread_mutex_init(&data->death_lock, NULL);
+	pthread_mutex_init(&data->eat_lock, NULL);
 	while (++i < data->var1_philonum)
 	{
 		data->philosophers[i].philo_id = i + 1;
 		data->philosophers[i].total_eat = 0;
-		data->philosophers[i].last_eat = -1;
+		data->philosophers[i].last_eat = get_time();
+		data->philosophers[i].data = data;
 		pthread_mutex_init(&data->forks[i], NULL);
 		data->philosophers[i].left_fork = &data->forks[i];
 		data->philosophers[i].right_fork = &data->forks[(i + 1) % data->var1_philonum];
-		data->philosophers[i].data = data;
 	}
 }
 /* function for each philosopher */
@@ -76,11 +85,24 @@ void	*rules(void *arg)
 	pthread_detach(philo->status_check);
 	if (philo->philo_id % 2 == 0)
 		usleep(1000);
-	while (!philo->data->death && !check_var5_eatnum(philo->data))
+	while (philo->data->death != 0 && check_var5_eatnum(philo->data) != 1)
 	{
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
+	}
+	return (NULL);
+}
+
+void	*check_termination(void *arg)
+{
+	t_data	*data;
+
+	data = (t_data *)arg;
+	while (1)
+	{
+		if (check_var5_eatnum(data) == 1 || check_dead(data) == 1)
+			break ;
 	}
 	return (NULL);
 }
@@ -91,16 +113,17 @@ void	simulation(t_data *data)
 	int	i;
 
 	i = 0;
-	data->start_time = get_time();
+	pthread_create(&data->threads, NULL, &check_termination, data);
 	while (i < data->var1_philonum)
 	{
-		pthread_create(&data->threads[i], NULL, rules, &data->philosophers[i]);
+		pthread_create(&data->philosophers[i].status_check, NULL, &rules, &data->philosophers[i]);
 		i++;
 	}
 	i = 0;
+	pthread_join(data->threads, NULL);
 	while (i < data->var1_philonum)
 	{
-		pthread_join(data->threads[i], NULL);
+		pthread_join(data->philosophers[i].status_check, NULL);
 		i++;
 	}
 }
@@ -115,6 +138,8 @@ void	free_all(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&data->death_lock);
+	pthread_mutex_destroy(&data->eat_lock);
 	if (data->threads)
 		free(data->threads);
 	if (data->forks)

@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:08:44 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/24 16:10:28 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/25 18:24:04 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ typedef struct s_data
 	int				var5_eatnum;
 	time_t			start_time;
 	int				death;
-	pthread_t		*threads;
+	pthread_t		threads;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	death_lock;
+	pthread_mutex_t eat_lock;
 	t_philo			*philosophers;
 }					t_data;
 
@@ -60,13 +62,14 @@ time_t	get_time(void);
 /* init */
 int		input_check(int argc, char *argv[]);
 void	initialize_data(t_data *data, int argc, char *argv[]);
+void	*check_termination(void *arg);
 void	*rules(void *arg);
 void	simulation(t_data *data);
 void	free_all(t_data *data);
 
 /* action */
 int		check_var5_eatnum(t_data *data);
-void	*check_termination(void *arg);
+int		check_dead(t_data *data);
 void	philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);

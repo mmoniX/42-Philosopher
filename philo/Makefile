@@ -1,5 +1,5 @@
-CC = cc -pthread
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
 # CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 VAL = valgrind --leak-check=full --track-origins=yes
@@ -13,23 +13,27 @@ OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 NAME = philo
 
+all: $(NAME)
+
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+	@echo "\033[32mProgram is ready to execute\033[0m"
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir	-p	$(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
-	rm -rf $(OBJ_DIR)
+	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
+	@echo "\033[31mAll executables are removed\033[0m"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
 valgrind: $(NAME)
 	$(VAL) ./$(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re valgrind

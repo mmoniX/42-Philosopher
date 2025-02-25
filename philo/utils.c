@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:42:38 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/23 14:48:59 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/25 17:31:51 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,12 @@ time_t	get_time(void)
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
+
+// void	print(char *str, t_data *data, int id)
+// {
+// 	time_t	time;
+
+// 	time = get_time() - data->start_time;
+// 	if (!is_dead(data))
+// 		printf("%lu %d %s\n", time, id, str);
+// }
