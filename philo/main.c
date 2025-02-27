@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:07:23 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/27 16:13:45 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/27 17:45:42 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,15 @@ int	main(int argc, char *argv[])
 
 	if (input_check(argc, argv) != 1)
 		return (0);
-	initialize_data(&data, argv, argc);
+	data.var1_philonum = ft_atoi(argv[1]);
+	data.var2_die = ft_atoi(argv[2]);
+	data.var3_eat = ft_atoi(argv[3]);
+	data.var4_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data.var5_eatnum = ft_atoi(argv[5]);
+	else
+		data.var5_eatnum = -1;
+	initialize_data(&data);
 	simulation(&data);
 	free_all(&data);
 	return (0);

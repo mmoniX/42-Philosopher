@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/27 17:02:34 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/27 19:47:23 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,11 @@ int	input_check(int argc, char *argv[])
 	return (1);
 }
 
-void	initialize_data(t_data *data, char *argv[], int argc)
+void	initialize_data(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->var1_philonum = ft_atoi(argv[1]);
-	data->var2_die = ft_atoi(argv[2]);
-	data->var3_eat = ft_atoi(argv[3]);
-	data->var4_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->var5_eatnum = ft_atoi(argv[5]);
-	else
-		data->var5_eatnum = -1;
 	data->start_time = get_time();
 	data->death = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->var1_philonum);
@@ -79,15 +71,8 @@ void	*rules(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->philo_id % 2 == 0)
 		usleep(1000);
-	while (1)
+	while (is_dead(philo->data) == 0)
 	{
-		pthread_mutex_lock(&philo->data->death_lock);
-		if (philo->data->death == 1)
-		{
-			pthread_mutex_unlock(&philo->data->death_lock);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->data->death_lock);
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
@@ -103,7 +88,12 @@ void	*check_termination(void *arg)
 	while (1)
 	{
 		if (check_var5_eatnum(data) == 1 || check_dead(data) == 1)
-			break ;
+		{
+			pthread_mutex_lock(&data->death_lock);
+            data->death = 1;
+            pthread_mutex_unlock(&data->death_lock);
+            break;
+		}
 	}
 	return (NULL);
 }

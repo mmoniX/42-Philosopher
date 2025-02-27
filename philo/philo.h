@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:08:44 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/27 16:33:14 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/27 19:38:04 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ int		ft_isdigit(char c);
 int		ft_atoi(const char *str);
 int		ft_strlen(const char *s);
 time_t	get_time(void);
+int		is_dead(t_data *data);
 
 /* init */
 int		input_check(int argc, char *argv[]);
-void	initialize_data(t_data *data, char *argv[], int argc);
+void	initialize_data(t_data *data);
 void	*check_termination(void *arg);
 void	*rules(void *arg);
 void	simulation(t_data *data);
