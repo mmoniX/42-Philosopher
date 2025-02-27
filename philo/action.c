@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:54:06 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/25 18:36:58 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/27 15:16:50 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,13 @@ void	philo_eat(t_philo *philo)
 	}
 	pthread_mutex_lock(philo->right_fork);
 	printf(WHITE "%ld	%d	has taken a fork\n" RESET, get_time() - philo->data->start_time, philo->philo_id);
+	pthread_mutex_lock(&philo->data->eat_lock);
 	printf(YELLOW "%ld	%d	is eating\n" RESET, get_time() - philo->data->start_time, philo->philo_id);
+	pthread_mutex_unlock(&philo->data->eat_lock);
+	pthread_mutex_lock(&philo->data->eat_lock);
 	philo->last_eat = get_time();
 	philo->total_eat++;
+	pthread_mutex_unlock(&philo->data->eat_lock);
 	usleep(philo->data->var3_eat * 1000);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -84,17 +88,13 @@ void	philo_eat(t_philo *philo)
 
 void	philo_sleep(t_philo *philo)
 {
-	time_t	time_diff;
-	
-	time_diff = get_time() - philo->data->start_time;
-	printf(BLUE "%ld	%d	is sleeping\n" RESET, time_diff, philo->philo_id);
+	printf(BLUE "%ld	%d	is sleeping\n" RESET, 
+		get_time() - philo->data->start_time, philo->philo_id);
 	usleep(philo->data->var4_sleep * 1000);
 }
 
 void	philo_think(t_philo *philo)
 {
-	time_t	time_diff;
-	
-	time_diff = get_time() - philo->data->start_time;
-	printf(GREEN "%ld	%d	is thinking\n" RESET, time_diff, philo->philo_id);
+	printf(GREEN "%ld	%d	is thinking\n" RESET, 
+		get_time() - philo->data->start_time, philo->philo_id);
 }

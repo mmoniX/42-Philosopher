@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:07:23 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/24 13:07:24 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/27 14:53:11 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char *argv[])
 
 	if (input_check(argc, argv) != 1)
 		return (0);
-	initialize_data(&data, argc, argv);
+	initialize_data(&data, argv, argc);
 	simulation(&data);
 	free_all(&data);
 	return (0);
