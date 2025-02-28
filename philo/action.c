@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:54:06 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/27 19:50:06 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/28 16:13:39 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,6 @@ void	philo_eat(t_philo *philo)
 	if (is_dead(philo->data) != 1)
 		printf(WHITE "%ld	%d	has taken a fork\n" RESET,
 			get_time() - philo->data->start_time, philo->philo_id);
-	if (philo->data->var1_philonum == 1)
-	{
-		usleep(philo->data->var2_die * 1000);
-		pthread_mutex_unlock(philo->left_fork);
-		// pthread_mutex_lock(&philo->data->death_lock);
-		// philo->data->death = 1;
-		// pthread_mutex_unlock(&philo->data->death_lock);
-		return ;
-	}
 	pthread_mutex_lock(philo->right_fork);
 	if (is_dead(philo->data) != 1)
 		printf(WHITE "%ld	%d	has taken a fork\n" RESET,
@@ -89,14 +80,13 @@ void	philo_eat(t_philo *philo)
 	if (is_dead(philo->data) != 1)
 		printf(YELLOW "%ld	%d	is eating\n" RESET,
 			get_time() - philo->data->start_time, philo->philo_id);
-	pthread_mutex_lock(&philo->data->eat_lock);
 	philo->last_eat = get_time();
 	philo->total_eat++;
 	pthread_mutex_unlock(&philo->data->eat_lock);
 	usleep(philo->data->var3_eat * 1000);
 	philo->eat = 0;
-	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 }
 
 void	philo_sleep(t_philo *philo)

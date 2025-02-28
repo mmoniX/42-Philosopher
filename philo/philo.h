@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:08:44 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/27 19:38:04 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/28 16:18:58 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 # define YELLOW	"\e[0;33m"			//eat
 # define BLUE	"\e[0;34m"			//sleep
 # define GREEN	"\e[0;32m"			//think
+
+# define FORK	1
+# define EAT	2
+# define SLEEP	3
+# define THINK	4
+# define DIED	5
 
 typedef struct s_philo
 {
@@ -76,5 +82,5 @@ void	philo_think(t_philo *philo);
 
 /* main */
 void	free_all(t_data *data);
-
+void	one_philo(t_philo *philo);
 #endif

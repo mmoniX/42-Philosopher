@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/27 19:47:23 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/02/28 16:17:57 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	initialize_data(t_data *data)
 		data->philosophers[i].data = data;
 		pthread_mutex_init(&data->forks[i], NULL);
 		data->philosophers[i].left_fork = &data->forks[i];
-		data->philosophers[i].right_fork = &data->forks[(i + 1) % data->var1_philonum];
+		data->philosophers[i].right_fork = &data->forks[(i + 1)
+			% data->var1_philonum];
 		i++;
 	}
 }
@@ -90,9 +91,9 @@ void	*check_termination(void *arg)
 		if (check_var5_eatnum(data) == 1 || check_dead(data) == 1)
 		{
 			pthread_mutex_lock(&data->death_lock);
-            data->death = 1;
-            pthread_mutex_unlock(&data->death_lock);
-            break;
+			data->death = 1;
+			pthread_mutex_unlock(&data->death_lock);
+			break ;
 		}
 	}
 	return (NULL);
