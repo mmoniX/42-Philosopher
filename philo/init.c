@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/28 18:19:03 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/03/02 14:27:48 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,6 @@ void	initialize_data(t_data *data)
 }
 
 /* function for each philosopher */
-// void	*rules(void *arg)
-// {
-// 	t_philo	*philo;
-
-// 	philo = (t_philo *)arg;
-// 	if (philo->philo_id % 2 == 0)
-// 		usleep(1000);
-// 	while (is_dead(philo->data) != 1)
-// 	{
-// 		philo_eat(philo);
-// 		philo_sleep(philo);
-// 		philo_think(philo);
-// 	}
-// 	return (NULL);
-// }
-
 void	*rules(void *arg)
 {
 	t_philo	*philo;
@@ -87,15 +71,8 @@ void	*rules(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->philo_id % 2 == 0)
 		usleep(1000);
-	while (1)
+	while (is_dead(philo->data) != 1)
 	{
-		pthread_mutex_lock(&philo->data->death_lock);
-		if (philo->data->death == 1)
-		{
-			pthread_mutex_unlock(&philo->data->death_lock);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->data->death_lock);
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
@@ -120,19 +97,6 @@ void	*check_termination(void *arg)
 	}
 	return (NULL);
 }
-
-// void	*check_termination(void *arg)
-// {
-// 	t_data	*data;
-
-// 	data = (t_data *)arg;
-// 	while (1)
-// 	{
-// 		if (check_var5_eatnum(data) == 1 || check_dead(data) == 1)
-// 			break ;
-// 	}
-// 	return (NULL);
-// }
 
 /* function for the whole */
 void	simulation(t_data *data)

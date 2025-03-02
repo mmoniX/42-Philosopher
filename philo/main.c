@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:07:23 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/28 17:38:48 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/03/02 14:23:21 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ void	free_all(t_data *data)
 		free(data->philosophers);
 }
 
-// void	one_philo(t_philo *philo)
-// {
-// 	pthread_mutex_lock(philo->left_fork);
-// 	if (is_dead(philo->data) != 1)
-// 		printf(WHITE "%ld	%d	has taken a fork\n" RESET,
-// 			get_time() - philo->data->start_time, philo->philo_id);
-// 	pthread_mutex_unlock(philo->left_fork);
-// 	usleep(philo->data->v2_die * 1000);
-// 	return ;
-// }
+void	one_philo(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	if (is_dead(philo->data) != 1)
+		printf(WHITE "%ld	%d	has taken a fork\n" RESET,
+			get_time() - philo->data->start_time, philo->philo_id);
+	pthread_mutex_unlock(philo->left_fork);
+	usleep(philo->data->v2_die * 1000);
+	return ;
+}
 
 int	main(int argc, char *argv[])
 {
@@ -56,6 +56,8 @@ int	main(int argc, char *argv[])
 	else
 		data.v5_eatnum = -1;
 	initialize_data(&data);
+	if (data.v1_pnm == 1)
+		one_philo(data.philosophers);
 	simulation(&data);
 	free_all(&data);
 	return (0);

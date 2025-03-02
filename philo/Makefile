@@ -1,6 +1,6 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
-# CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+# CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 VAL = valgrind --leak-check=full --track-origins=yes
 # HAL = valgrind --tool=helgrind
