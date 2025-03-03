@@ -51,9 +51,9 @@ int	check_dead(t_data *data)
 		if ((get_time() - data->philosophers[i].last_eat) >= data->v2_die
 			&& data->philosophers[i].eat == 0 && data->death != 1)
 		{
-			data->death = 1;
 			printf(BLRED "%ld	%d	died\n" RESET,
 				get_time() - data->start_time, data->philosophers[i].philo_id);
+			data->death = 1;
 			pthread_mutex_unlock(&data->death_lock);
 			pthread_mutex_unlock(&data->eat_lock);
 			return (1);
@@ -83,7 +83,7 @@ void	philo_eat(t_philo *philo)
 	philo->last_eat = get_time();
 	philo->total_eat++;
 	pthread_mutex_unlock(&philo->data->eat_lock);
-	usleep(philo->data->v3_eat * 1000);
+	ft_usleep(philo->data->v3_eat);
 	philo->eat = 0;
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -94,7 +94,7 @@ void	philo_sleep(t_philo *philo)
 	if (is_dead(philo->data) != 1)
 		printf(BLUE "%ld	%d	is sleeping\n" RESET,
 			get_time() - philo->data->start_time, philo->philo_id);
-	usleep(philo->data->v4_sleep * 1000);
+	ft_usleep(philo->data->v4_sleep);
 }
 
 void	philo_think(t_philo *philo)

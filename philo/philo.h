@@ -59,6 +59,7 @@ int		ft_atoi(const char *str);
 int		ft_strlen(const char *s);
 time_t	get_time(void);
 int		is_dead(t_data *data);
+int		ft_usleep(time_t ms);
 
 /* init */
 int		input_check(int argc, char *argv[]);
@@ -76,5 +77,5 @@ void	philo_think(t_philo *philo);
 
 /* main */
 void	free_all(t_data *data);
-// void	one_philo(t_philo *philo);
+void	one_philo(t_philo *philo);
 #endif

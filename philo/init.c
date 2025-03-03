@@ -70,7 +70,7 @@ void	*rules(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->philo_id % 2 == 0)
-		usleep(1000);
+		ft_usleep(1);
 	while (is_dead(philo->data) != 1)
 	{
 		philo_eat(philo);

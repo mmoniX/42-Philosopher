@@ -37,7 +37,7 @@ void	one_philo(t_philo *philo)
 		printf(WHITE "%ld	%d	has taken a fork\n" RESET,
 			get_time() - philo->data->start_time, philo->philo_id);
 	pthread_mutex_unlock(philo->left_fork);
-	usleep(philo->data->v2_die * 1000);
+	ft_usleep(philo->data->v2_die);
 	return ;
 }
 

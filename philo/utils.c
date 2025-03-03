@@ -76,3 +76,13 @@ int	is_dead(t_data *data)
 	pthread_mutex_unlock(&data->death_lock);
 	return (0);
 }
+
+int	ft_usleep(time_t ms)
+{
+	time_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < ms)
+		usleep(500);
+	return (0);
+}
