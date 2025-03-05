@@ -6,37 +6,11 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:27:39 by mmonika           #+#    #+#             */
-/*   Updated: 2025/03/02 14:27:48 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/03/05 09:06:03 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	input_check(int argc, char *argv[])
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	if (argc < 5 || argc > 6)
-		return (printf("ERROR: check arguments number\n"), -1);
-	while (i < argc)
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (!ft_isdigit(argv[i][j]))
-				return (printf("ERROR: invalid input\n"), -1);
-			j++;
-		}
-		if (i == 5 && (ft_atoi(argv[i]) < 0 || ft_strlen(argv[i]) >= 11))
-			return (printf("ERROR: check arguments\n"), -1);
-		else if (ft_atoi(argv[i]) <= 0 || ft_strlen(argv[i]) >= 11)
-			return (printf("ERROR: not positive input\n"), -1);
-		i++;
-	}
-	return (1);
-}
 
 void	initialize_data(t_data *data)
 {
@@ -63,6 +37,18 @@ void	initialize_data(t_data *data)
 	}
 }
 
+int	is_dead(t_data *data)
+{
+	pthread_mutex_lock(&data->death_lock);
+	if (data->death == 1)
+	{
+		pthread_mutex_unlock(&data->death_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&data->death_lock);
+	return (0);
+}
+
 /* function for each philosopher */
 void	*rules(void *arg)
 {
@@ -70,30 +56,13 @@ void	*rules(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->philo_id % 2 == 0)
-		usleep(1000);
+		ft_usleep(1);
 	while (is_dead(philo->data) != 1)
 	{
+		take_fork(philo);
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
-	}
-	return (NULL);
-}
-
-void	*check_termination(void *arg)
-{
-	t_data	*data;
-
-	data = (t_data *)arg;
-	while (1)
-	{
-		if (check_var5_eatnum(data) == 1 || check_dead(data) == 1)
-		{
-			pthread_mutex_lock(&data->death_lock);
-			data->death = 1;
-			pthread_mutex_unlock(&data->death_lock);
-			break ;
-		}
 	}
 	return (NULL);
 }
@@ -119,4 +88,22 @@ void	simulation(t_data *data)
 		pthread_join(data->philosophers[i].status_check, NULL);
 		i++;
 	}
+}
+
+void	free_all(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&data->death_lock);
+	pthread_mutex_destroy(&data->eat_lock);
+	while (i < data->v1_pnm)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	if (data->forks)
+		free(data->forks);
+	if (data->philosophers)
+		free(data->philosophers);
 }

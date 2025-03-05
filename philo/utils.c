@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 17:42:38 by mmonika           #+#    #+#             */
-/*   Updated: 2025/02/28 16:16:52 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/03/05 09:00:25 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,12 @@ time_t	get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	is_dead(t_data *data)
+int	ft_usleep(time_t ms)
 {
-	pthread_mutex_lock(&data->death_lock);
-	if (data->death == 1)
-	{
-		pthread_mutex_unlock(&data->death_lock);
-		return (1);
-	}
-	pthread_mutex_unlock(&data->death_lock);
+	time_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < ms)
+		usleep(500);
 	return (0);
 }

@@ -1,12 +1,12 @@
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
+# CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 VAL = valgrind --leak-check=full --track-origins=yes
 # HAL = valgrind --tool=helgrind
 # DRD = valgrind --tool=drd
 
-SRC = main.c utils.c init.c action.c
+SRC = main.c utils.c init.c action.c check.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)

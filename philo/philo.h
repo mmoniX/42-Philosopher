@@ -6,7 +6,7 @@
 /*   By: mmonika <mmonika@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:08:44 by mmonika           #+#    #+#             */
-/*   Updated: 2025/03/02 12:07:46 by mmonika          ###   ########.fr       */
+/*   Updated: 2025/03/05 09:08:55 by mmonika          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define RESET	"\e[0m"
-# define BLRED	"\e[1m\e[31m"		//dead
-# define WHITE	"\e[0;37m"			//fork
-# define YELLOW	"\e[0;33m"			//eat
-# define BLUE	"\e[0;34m"			//sleep
-# define GREEN	"\e[0;32m"			//think
+# define RESET	"\033[0m"
+# define BLRED	"\033[1m\033[31m"		//dead
+# define WHITE	"\033[0;37m"			//fork
+# define YELLOW	"\033[0;33m"			//eat
+# define BLUE	"\033[0;34m"			//sleep
+# define GREEN	"\033[0;32m"			//think
 
 typedef struct s_philo
 {
@@ -58,23 +58,25 @@ int		ft_isdigit(char c);
 int		ft_atoi(const char *str);
 int		ft_strlen(const char *s);
 time_t	get_time(void);
-int		is_dead(t_data *data);
+int		ft_usleep(time_t ms);
 
 /* init */
-int		input_check(int argc, char *argv[]);
 void	initialize_data(t_data *data);
-void	*check_termination(void *arg);
+int		is_dead(t_data *data);
 void	*rules(void *arg);
 void	simulation(t_data *data);
+void	free_all(t_data *data);
 
 /* action */
-int		check_var5_eatnum(t_data *data);
-int		check_dead(t_data *data);
+void	take_fork(t_philo *philo);
 void	philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
 
-/* main */
-void	free_all(t_data *data);
-// void	one_philo(t_philo *philo);
+/* check */
+int		input_check(int argc, char *argv[]);
+int		check_var5_eatnum(t_data *data);
+int		check_dead(t_data *data);
+void	*check_termination(void *arg);
+
 #endif
