@@ -56,7 +56,7 @@ void	*rules(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->philo_id % 2 == 0)
-		ft_usleep(1);
+		usleep(1000);
 	while (is_dead(philo->data) != 1)
 	{
 		take_fork(philo);

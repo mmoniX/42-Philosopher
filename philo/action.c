@@ -20,7 +20,7 @@ void	take_fork(t_philo *philo)
 			get_time() - philo->data->start_time, philo->philo_id);
 	if (philo->data->v1_pnm == 1)
 	{
-		ft_usleep(philo->data->v2_die);
+		ft_usleep(philo->data->v2_die, philo->data);
 		pthread_mutex_unlock(philo->left_fork);
 		return ;
 	}
@@ -40,7 +40,7 @@ void	philo_eat(t_philo *philo)
 	philo->last_eat = get_time();
 	philo->total_eat++;
 	pthread_mutex_unlock(&philo->data->eat_lock);
-	ft_usleep(philo->data->v3_eat);
+	ft_usleep(philo->data->v3_eat, philo->data);
 	philo->eat = 0;
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -51,7 +51,7 @@ void	philo_sleep(t_philo *philo)
 	if (is_dead(philo->data) != 1)
 		printf(BLUE "%ld	%d	is sleeping\n" RESET,
 			get_time() - philo->data->start_time, philo->philo_id);
-	ft_usleep(philo->data->v4_sleep);
+	ft_usleep(philo->data->v4_sleep, philo->data);
 }
 
 void	philo_think(t_philo *philo)

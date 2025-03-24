@@ -2,8 +2,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
 # CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
-VAL = valgrind --leak-check=full --track-origins=yes
-# HAL = valgrind --tool=helgrind
+# VAL = valgrind --leak-check=full --track-origins=yes
+HAL = valgrind --tool=helgrind
 # DRD = valgrind --tool=drd
 
 SRC = main.c utils.c init.c action.c check.c
@@ -34,6 +34,6 @@ fclean: clean
 re: fclean all
 
 valgrind: $(NAME)
-	$(VAL) ./$(NAME)
+	$(HAL) ./$(NAME)
 
 .PHONY: all clean fclean re valgrind

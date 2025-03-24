@@ -58,7 +58,7 @@ int		ft_isdigit(char c);
 int		ft_atoi(const char *str);
 int		ft_strlen(const char *s);
 time_t	get_time(void);
-int		ft_usleep(time_t ms);
+int		ft_usleep(time_t ms, t_data *data);
 
 /* init */
 void	initialize_data(t_data *data);

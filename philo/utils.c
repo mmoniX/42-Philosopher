@@ -65,12 +65,16 @@ time_t	get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	ft_usleep(time_t ms)
+int	ft_usleep(time_t ms, t_data *data)
 {
 	time_t	start;
 
 	start = get_time();
 	while ((get_time() - start) < ms)
+	{
+		if (is_dead(data) == 1)
+			return (1);
 		usleep(500);
+	}
 	return (0);
 }
